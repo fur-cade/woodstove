@@ -1,0 +1,5 @@
+scripts:
+  main: woodstove.rb
+
+bin:
+  woodstove: main

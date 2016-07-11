@@ -2,7 +2,7 @@
 # Copyright (c) 2016 the furry entertainment project
 # Licensed under the MIT license.
 
-require './packagemanager'
+require 'woodstove/packagemanager'
 require 'fileutils'
 
 # Prints the error and terminates the program if the args array is empty.

@@ -141,7 +141,7 @@ end
 
 # Creates a package instance for the current working directory.
 def current_package
-  WoodstovePackage.new '', FileUtils.pwd, global_kindling_bin
+  WoodstovePackage.new 'current package', FileUtils.pwd, global_kindling_bin
 end
 
 # Returns the global kindling directory.

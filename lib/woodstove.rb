@@ -2,7 +2,7 @@
 # Copyright (c) 2016 the furry entertainment project
 # Licensed under the MIT license.
 
-require './argmanager'
-require './helpcommand'
-require './packagecommands'
+require 'woodstove/argmanager'
+require 'woodstove/helpcommand'
+require 'woodstove/packagecommands'
 $argmanager.run

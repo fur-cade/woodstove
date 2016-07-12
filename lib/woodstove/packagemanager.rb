@@ -49,15 +49,18 @@ class WoodstovePackage
   end
 
   # Install this package by cloning it from github.
-  def install
+  def install branch
     if is_installed?
       exec_here "git init && git remote add origin \"#{giturl}\"" if !is_repo?
       exec_here "git pull origin master"
     else
       `git clone "#{giturl}" "#{@directory}"`
     end
-    install_dependencies
-    install_bins
+    exec_here "git checkout #{branch}" if branch != false
+    if is_package?
+      install_dependencies
+      install_bins
+    end
   end
 
   # Installs the dependencies for this package inside the `kindling` directory.
@@ -133,9 +136,11 @@ end
 # Installs the given package into the specified directory.
 def install_package package, directory, bindir
   name = package.split('/')[1]
+  branchget = package.split '@'
+  branch = branchget.length > 1 ? branchget[1] : false
   path = "#{directory}/#{name}"
   pkg = WoodstovePackage.new package, path, bindir
-  pkg.install
+  pkg.install branch
   pkg
 end
 
@@ -146,11 +151,39 @@ end
 
 # Returns the global kindling directory.
 def global_kindling
-  # TODO: Vary by operationg system! This only works on linux!
-  '/usr/var/kindling'
+  if OS.mac?
+    '~/Library/Application Support/woodstove'
+  elsif OS.windows?
+    'C:/ProgramData/woodstove/kindling'
+  else
+    '/usr/var/kindling'
+  end
 end
 
 # Returns the global kindling bin directory.
 def global_kindling_bin
-  '/usr/local/bin'
+  if OS.windows?
+    'C:/ProgramData/woodstove/bin'
+  else
+    '/usr/local/bin'
+  end
+end
+
+# Source: http://stackoverflow.com/questions/170956/how-can-i-find-which-operating-system-my-ruby-program-is-running-on
+module OS
+  def OS.windows?
+    (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
+  end
+
+  def OS.mac?
+   (/darwin/ =~ RUBY_PLATFORM) != nil
+  end
+
+  def OS.unix?
+    !OS.windows?
+  end
+
+  def OS.linux?
+    OS.unix? and not OS.mac?
+  end
 end

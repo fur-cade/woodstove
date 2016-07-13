@@ -52,9 +52,9 @@ class WoodstovePackage
   def install branch
     if is_installed?
       exec_here "git init && git remote add origin \"#{giturl}\"" if !is_repo?
-      exec_here "git pull origin master"
+      exec_here "git pull --all"
     else
-      `git clone "#{giturl}" "#{@directory}"`
+      `git clone -b #{branch} "#{giturl}" "#{@directory}"`
     end
     exec_here "git checkout #{branch}" if branch != false
     if is_package?

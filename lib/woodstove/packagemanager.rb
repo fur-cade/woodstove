@@ -61,6 +61,7 @@ class WoodstovePackage
       install_dependencies
       install_bins
     end
+    install_external_deps
   end
 
   # Removes this package.

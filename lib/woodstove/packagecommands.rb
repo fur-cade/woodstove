@@ -39,7 +39,7 @@ class InstallGlobalCommand
   def info; 'Install specified packages globally.'; end
 
   def run packages
-    need_args 'You must specify packages to install globally.'
+    need_args packages, 'You must specify packages to install globally.'
     packages.each do |package|
       install_package package, global_kindling, global_kindling_bin
     end
@@ -66,7 +66,7 @@ class ExecCommand
   def info; 'Runs specified script for current package.'; end
 
   def run args
-    need_args 'You must specify a script to execute.'
+    need_args args, 'You must specify a script to execute.'
     current_package.run_script args[0], args[1..-1].join(' ')
   end
 end

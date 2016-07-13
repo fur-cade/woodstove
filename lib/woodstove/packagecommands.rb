@@ -32,6 +32,21 @@ class InstallCommand
 end
 $argmanager.register :install, InstallCommand.new
 
+class RemoveCommand
+  def long; 'remove'; end
+  def short; 'r'; end
+  def opts; '[packages]'; end
+  def info; 'Remove specified packages.'; end
+
+  def run packages
+    need_args packages, 'You must specify packages to remove.'
+    packages.each do |package|
+      remove_package package, "#{FileUtils.pwd}/kindling", "#{FileUtils.pwd}/kindling/.bin"
+    end
+  end
+end
+$argmanager.register :remove, RemoveCommand.new
+
 class InstallGlobalCommand
   def long; 'install-global'; end
   def short; 'ig'; end
@@ -46,6 +61,21 @@ class InstallGlobalCommand
   end
 end
 $argmanager.register :installglobal, InstallGlobalCommand.new
+
+class RemoveGlobalCommand
+  def long; 'remove-global'; end
+  def short; 'rg'; end
+  def opts; '[packages]'; end
+  def info; 'Remove specified packages globally.'; end
+
+  def run packages
+    need_args packages, 'You must specify packages to remove globally.'
+    packages.each do |package|
+      remove_package package, global_kindling, global_kindling_bin
+    end
+  end
+end
+$argmanager.register :removeglobal, RemoveGlobalCommand.new
 
 class RunCommand
   def long; 'run'; end

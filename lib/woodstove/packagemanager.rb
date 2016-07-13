@@ -63,6 +63,13 @@ class WoodstovePackage
     end
   end
 
+  # Removes this package.
+  def remove
+    exit_with_error "Packages must be installed to be removed." if !is_installed?
+    remove_bins if is_package?
+    FileUtils.rm_rf @directory
+  end
+
   # Installs the dependencies for this package inside the `kindling` directory.
   def install_dependencies
     kf = kindling
@@ -94,6 +101,17 @@ class WoodstovePackage
         File.open "#{@binpath}/#{bin[0]}", 'w' do |file|
           file.puts generate_run_command bin[1]
         end
+      end
+    end
+    self
+  end
+
+  # Removes the binaries for this package from the binpath.
+  def remove_bins
+    kf = kindling
+    if kf['bin'] != nil
+      kf['bin'].each do |bin|
+        FileUtils.rm "#{@binpath}/#{bin[0]}"
       end
     end
     self
@@ -135,12 +153,22 @@ end
 
 # Installs the given package into the specified directory.
 def install_package package, directory, bindir
-  name = package.split('/')[1]
   branchget = package.split '@'
+  name = branchget[0].split('/')[1]
   branch = branchget.length > 1 ? branchget[1] : false
   path = "#{directory}/#{name}"
   pkg = WoodstovePackage.new package, path, bindir
   pkg.install branch
+  pkg
+end
+
+# Removes the given package from the specified directory.
+def remove_package package, directory, bindir
+  branchget = package.split '@'
+  name = branchget[0].split('/')[1]
+  path = "#{directory}/#{name}"
+  pkg = WoodstovePackage.new package, path, bindir
+  pkg.remove
   pkg
 end
 

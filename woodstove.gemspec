@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'woodstove'
-  s.version     = '0.0.3'
+  s.version     = '0.0.4'
   s.date        = Time.now.strftime('%Y-%m-%d')
   s.summary     = 'A simple package manager powered by github repositories.'
   s.description = 'A simple package manager powered by github repositories. See http://github.com/fur-cade/woodstove'

@@ -75,7 +75,7 @@ class WoodstovePackage
     kf = kindling
     if kf['depends'] != nil
       kf['depends'].each do |package|
-        install_package package, "#{@directory}/kindling"
+        install_package package, "#{@directory}/kindling", "#{@directory}/kindling/.bin"
       end
     end
     self

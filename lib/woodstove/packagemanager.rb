@@ -166,7 +166,7 @@ end
 def remove_package package, directory, bindir
   branchget = package.split '@'
   name = branchget[0].split('/')[1]
-  path = "#{directory}/#{name}"
+  path = "#{directory}/#{package}"
   pkg = WoodstovePackage.new package, path, bindir
   pkg.remove
   pkg

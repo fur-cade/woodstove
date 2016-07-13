@@ -77,9 +77,9 @@ class RemoveGlobalCommand
 end
 $argmanager.register :removeglobal, RemoveGlobalCommand.new
 
-class RunCommand
-  def long; 'run'; end
-  def short; 'r'; end
+class StartCommand
+  def long; 'start'; end
+  def short; 's'; end
   def opts; '[args]'; end
   def info; 'Runs `main` script for current package.'; end
 
@@ -87,7 +87,7 @@ class RunCommand
     current_package.run_script 'main', args.join(' ')
   end
 end
-$argmanager.register :run, RunCommand.new
+$argmanager.register :start, StartCommand.new
 
 class ExecCommand
   def long; 'exec'; end

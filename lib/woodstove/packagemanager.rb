@@ -157,7 +157,7 @@ def install_package package, directory, bindir
   name = branchget[0].split('/')[1]
   branch = branchget.length > 1 ? branchget[1] : false
   path = "#{directory}/#{name}"
-  pkg = WoodstovePackage.new package, path, bindir
+  pkg = WoodstovePackage.new branchget[0], path, bindir
   pkg.install branch
   pkg
 end
@@ -167,7 +167,7 @@ def remove_package package, directory, bindir
   branchget = package.split '@'
   name = branchget[0].split('/')[1]
   path = "#{directory}/#{package}"
-  pkg = WoodstovePackage.new package, path, bindir
+  pkg = WoodstovePackage.new branchget[0], path, bindir
   pkg.remove
   pkg
 end
